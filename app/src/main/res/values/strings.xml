@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FoodsApp_JulianGarrido</string>
+    <string name="title_home">Home</string>
+    <string name="title_gestion">Gestion</string>
+</resources>
