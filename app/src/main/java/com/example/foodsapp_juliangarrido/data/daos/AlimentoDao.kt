@@ -46,4 +46,14 @@ open class AlimentoDao(private val context: Context) {
         }
     }
 
+    fun deleteAlimentoAtPosition(posicion: Int) {
+        val lista = bdFicheroAlimento.leer()
+        if (posicion in 0 until lista.size) {
+            lista.removeAt(posicion)
+            bdFicheroAlimento.escribir(lista)
+        } else {
+            throw IndexOutOfBoundsException("La posición está fuera del rango de la lista de alimentos")
+        }
+    }
+
 }

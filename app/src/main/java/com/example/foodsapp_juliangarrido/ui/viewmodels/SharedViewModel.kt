@@ -26,9 +26,15 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         alimentoMutableList.postValue(alimentoMutableList.value)
     }
 
-    fun eliminarAlimento(alimento: AlimentoModel) {
+    fun eliminarAlimento(alimento:AlimentoModel) {
         alimentoDao.deleteAlimento(alimento)
         alimentoMutableList.value?.remove(alimento)
+        alimentoMutableList.postValue(alimentoMutableList.value)
+    }
+
+    fun deleteAlimentoAtPosition(posicion:Int) {
+        alimentoDao.deleteAlimentoAtPosition(posicion)
+        alimentoMutableList.value?.removeAt(posicion)
         alimentoMutableList.postValue(alimentoMutableList.value)
     }
 

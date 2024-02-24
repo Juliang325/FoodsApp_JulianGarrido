@@ -7,42 +7,32 @@ data class AlimentoModel (val nombre: String,
                      var grHC: Double=0.0,
                      var grLip:Double=0.0,
                      var grPro:Double=0.0): Serializable {
+    var Kcal: Double = 0.0
+    var ingredientes: MutableList<AlimentoModel> = mutableListOf()  // Lista de ingredientes
 
-    var Kcal:Double=0.0
-
-    var ingredientes :MutableList<IngredienteModel?> = mutableListOf(null)
-
-    init{
+    init {
         calculaKcal()
     }
 
     private fun calculaKcal() {
-        this.Kcal=(4*grHC+4*grPro+9*grLip)
+        if (tipo == "simple") {
+            this.Kcal = (4 * grHC + 4 * grPro + 9 * grLip)
+        } else if (tipo == "receta") {
+            this.Kcal = ingredientes.sumByDouble { it.Kcal }
+        }
     }
 
-    private fun calculaCantidades(ing: IngredienteModel){
-
-        this.grHC+=ing.alimento.grHC*ing.cantidad/100
-        this.grLip+=ing.alimento.grLip*ing.cantidad/100
-        this.grPro+=ing.alimento.grPro*ing.cantidad/100
-
+    fun agregarIngrediente(ingrediente: AlimentoModel) {
+        if (tipo == "receta") {
+            ingredientes.add(ingrediente)
+            calculaKcal()
+        }
     }
 
-    fun addIngrediente(ing: IngredienteModel){
-        ingredientes.add(ing)
-        this.calculaCantidades(ing)
-        this.calculaKcal()
-    }
-
-    fun recalcula(){
-        this.grHC=0.0
-        this.grLip=0.0
-        this.grPro=0.0
-        for(ing in ingredientes){
-            if (ing!=null) {
-                this.calculaCantidades(ing)
-                this.calculaKcal()
-            }
+    fun eliminarIngrediente(ingrediente: AlimentoModel) {
+        if (tipo == "receta") {
+            ingredientes.remove(ingrediente)
+            calculaKcal()
         }
     }
 
