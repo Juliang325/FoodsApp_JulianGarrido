@@ -3,16 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_simple">
+
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.foodsapp_juliangarrido.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_dieta"
+        android:name="com.example.foodsapp_juliangarrido.ui.fragments.dieta.DietaFragment"
+        android:label="fragment_dieta"
+        tools:layout="@layout/fragment_dieta" />
     <fragment
-        android:id="@+id/navigation_gestion"
-        android:name="com.example.foodsapp_juliangarrido.ui.gestion.GestionFragment"
-        android:label="fragment_gestion"
-        tools:layout="@layout/fragment_gestion" />
+        android:id="@+id/navigation_menu"
+        android:name="com.example.foodsapp_juliangarrido.ui.fragments.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/navigation_receta"
+        android:name="com.example.foodsapp_juliangarrido.ui.fragments.receta.RecetaFragment"
+        android:label="fragment_receta"
+        tools:layout="@layout/fragment_receta" />
+    <fragment
+        android:id="@+id/navigation_simple"
+        android:name="com.example.foodsapp_juliangarrido.ui.fragments.simple.SimpleFragment"
+        android:label="fragment_simple"
+        tools:layout="@layout/fragment_simple" />
 </navigation>
