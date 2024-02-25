@@ -3,7 +3,6 @@ package com.example.foodsapp_juliangarrido.ui.fragments.simple
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodsapp_juliangarrido.R
 import com.example.foodsapp_juliangarrido.data.model.AlimentoModel
 import com.example.foodsapp_juliangarrido.databinding.FragmentSimpleBinding
-import com.example.foodsapp_juliangarrido.ui.adapter.AlimentoAdapter
+import com.example.foodsapp_juliangarrido.ui.adapter.Alimentos.AlimentoAdapter
 import com.example.foodsapp_juliangarrido.ui.viewmodels.SharedViewModel
 
 
@@ -38,7 +37,7 @@ class SimpleFragment : Fragment() {
         sharedViewModel.alimentoMutableList.observe(viewLifecycleOwner) {
 
             adapterAlimento = AlimentoAdapter(
-                sharedViewModel.obtenerAlimentos(),
+                sharedViewModel.obtenerAlimentos("simple"),
                 onClickDelete = { position -> showDeleteConfirmationDialog(position) })
 
             binding.rvSimple.layoutManager =

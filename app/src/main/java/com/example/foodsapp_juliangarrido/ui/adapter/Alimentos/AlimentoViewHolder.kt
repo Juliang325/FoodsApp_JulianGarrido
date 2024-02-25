@@ -1,4 +1,4 @@
-package com.example.foodsapp_juliangarrido.ui.adapter
+package com.example.foodsapp_juliangarrido.ui.adapter.Alimentos
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

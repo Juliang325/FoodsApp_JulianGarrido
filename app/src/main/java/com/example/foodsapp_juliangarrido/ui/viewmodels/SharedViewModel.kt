@@ -16,8 +16,15 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         alimentoMutableList.value = alimentoDao.getAlimentos()
     }
 
-    fun obtenerAlimentos(): MutableList<AlimentoModel> {
-        return alimentoMutableList.value ?: mutableListOf()
+    fun obtenerAlimentos(tipo: String): MutableList<AlimentoModel> {
+        val alimentos = alimentoMutableList.value ?: mutableListOf()
+        return when (tipo) {
+            "simple" -> alimentos.filter { it.tipo == "simple" }.toMutableList()
+            "receta" -> alimentos.filter { it.tipo == "receta" }.toMutableList()
+            "menu" -> alimentos.filter { it.tipo == "menu" }.toMutableList()
+            "dieta" -> alimentos.filter { it.tipo == "dieta" }.toMutableList()
+            else -> alimentos
+        }
     }
 
     fun agregarAlimento(alimento: AlimentoModel) {

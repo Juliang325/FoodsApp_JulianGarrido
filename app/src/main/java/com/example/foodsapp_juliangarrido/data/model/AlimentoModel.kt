@@ -17,7 +17,7 @@ data class AlimentoModel (val nombre: String,
     private fun calculaKcal() {
         if (tipo == "simple") {
             this.Kcal = (4 * grHC + 4 * grPro + 9 * grLip)
-        } else if (tipo == "receta") {
+        } else {
             this.Kcal = ingredientes.sumByDouble { it.Kcal }
         }
     }

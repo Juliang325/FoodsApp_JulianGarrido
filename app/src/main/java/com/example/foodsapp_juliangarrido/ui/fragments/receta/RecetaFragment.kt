@@ -11,11 +11,11 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.foodsapp_juliangarrido.R
 import com.example.foodsapp_juliangarrido.data.model.AlimentoModel
-import com.example.foodsapp_juliangarrido.databinding.FragmentDietaBinding
 import com.example.foodsapp_juliangarrido.databinding.FragmentRecetaBinding
-import com.example.foodsapp_juliangarrido.ui.adapter.AlimentoAdapter
+import com.example.foodsapp_juliangarrido.ui.adapter.Alimentos.AlimentoAdapter
 import com.example.foodsapp_juliangarrido.ui.viewmodels.SharedViewModel
 
 class RecetaFragment : Fragment() {
@@ -31,11 +31,11 @@ class RecetaFragment : Fragment() {
         _binding = FragmentRecetaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        initListener()
-        sharedViewModel.alimentoMutableList.observe(viewLifecycleOwner) {
 
+        sharedViewModel.alimentoMutableList.observe(viewLifecycleOwner) {
+            initListener()
             adapterAlimento = AlimentoAdapter(
-                sharedViewModel.obtenerAlimentos(),
+                sharedViewModel.obtenerAlimentos("receta"),
                 onClickDelete = { position -> showDeleteConfirmationDialog(position) })
 
             binding.rvReceta.layoutManager =
@@ -78,21 +78,23 @@ class RecetaFragment : Fragment() {
     }
     private fun showDialog() {
         val dialog = context?.let { Dialog(it) }
-        dialog!!.setContentView(R.layout.add_dialog)
+        dialog!!.setContentView(R.layout.add_receta)
+
+        val recyclerViewAlimentos = dialog.findViewById<RecyclerView>(R.id.rvAlimentos)
+        val adaptadorAlimento = AlimentoAdapter(
+            sharedViewModel.obtenerAlimentos("simple"),
+            onClickDelete = { position -> showDeleteConfirmationDialog(position) })
+        recyclerViewAlimentos.adapter = adaptadorAlimento
+        recyclerViewAlimentos.layoutManager = LinearLayoutManager(requireContext())
+
 
         val etNombre: EditText = dialog.findViewById(R.id.etDialog)
-        val etGrHC: EditText = dialog.findViewById(R.id.etGrHC)
-        val etGrLip: EditText = dialog.findViewById(R.id.etGrLip)
-        val etGrPro: EditText = dialog.findViewById(R.id.etGrPro)
-        val btnDialog: Button = dialog.findViewById(R.id.btnAddAlimento)
+        val btnDialog: Button = dialog.findViewById(R.id.btnAddReceta)
 
         btnDialog.setOnClickListener {
             val nombre = etNombre.text.toString()
-            val grHC = etGrHC.text.toString().toDoubleOrNull() ?: 0.0
-            val grLip = etGrLip.text.toString().toDoubleOrNull() ?: 0.0
-            val grPro = etGrPro.text.toString().toDoubleOrNull() ?: 0.0
             //Almacenamos los datos para crear un nuevo alimento
-            sharedViewModel.agregarAlimento(AlimentoModel(nombre, "simple", grHC, grLip, grPro))
+            sharedViewModel.agregarAlimento(AlimentoModel(nombre, "receta"))
             dialog.dismiss()
         }
         dialog.show()
